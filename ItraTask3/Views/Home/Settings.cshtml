@@ -1,0 +1,104 @@
+﻿
+@{
+    ViewData["Title"] = "Settings";
+}
+<style>
+    div.clip {
+        width: 200px;
+        height: 30px;
+        background: #66CDAA;
+        padding: 5px;
+        border-radius: 20px;
+        margin-bottom: 10px;
+        position: center;
+        text-align: center;
+        box-sizing: border-box;
+    }
+    input[type="text"] {
+        background: #66CDAA;
+        position: center;
+        border-radius: 20px;
+        outline: none;
+        border: none;
+        text-align: center;
+    }
+    .descr {
+        display: none;
+        margin-left: 200px;
+        padding: 10px;
+        margin-top: 20px;
+        background: #f3f3f3;
+        height: auto;
+        -moz-box-shadow: 0 5px 5px rgba(0,0,0,0.3);
+        -webkit-box-shadow: 0 5px 5px rgba(0,0,0,0.3);
+        box-shadow: 0 5px 5px rgba(0,0,0,0.3);
+    }
+
+    .clip:hover .descr {
+        display: block;
+        position: absolute;
+        top: 120px;
+        z-index: 9999;
+        width: 400px;
+    }
+</style>
+
+<center>
+    <h2>Settings</h2>
+    <form method="post">
+        @foreach (var entity in Model)
+        {
+
+            <div class="clip" onclick="save(document.getElementById('form2'))">
+
+                <input type="text" name="SaveEntity" autocomplete="off" value="@entity.Name">
+                <div class="descr">
+                    <p style="color:green">WIN: @entity.Win</p>
+                    <p style="color:red">LOSE:@entity.Lose </p>
+                </div>
+            </div>
+        }
+        <div id="form2" style="display: none;">
+            <button type="submit" style="margin-bottom: 5px;" class="btn btn-sm btn-success" asp-action="Save">Save</button>
+        </div>
+    </form>
+
+    
+
+    <form method="post" id="form1" style="display: none;">
+        @for (int i = 0; i < 2; i++)
+        {
+            <div class="clip">
+                <input type="text" name="entity" autocomplete="off" value="Entity name" onfocus="if (this.value == 'Entity name') {this.value = '';}" onblur="if (this.value == '') {this.value = 'Entity name';}">
+            </div>
+        }
+        <button type="submit" style="margin-bottom: 5px;" class="btn btn-sm btn-success" asp-action="Add">Add</button>
+    </form>
+    <form method="post">
+        <input type="button" id="myButton1" value="Add" class="btn btn-sm btn-success" onclick="disp(document.getElementById('form1'))" />
+
+        <button type="submit" class="btn btn-sm btn-danger" asp-action="Delete">Delete two last entity</button>
+    </form>
+</center>
+    <script>
+        function disp(form) {
+            if (form.style.display == "none") {
+                form.style.display = "block";
+                document.getElementById("myButton1").value = "Cancel";
+                document.getElementById("myButton1").className = "btn btn-sm btn-warning";
+            } else {
+                form.style.display = "none";
+                document.getElementById("myButton1").value = "Add";
+                document.getElementById("myButton1").className = "btn btn-sm btn-success";
+            }
+        }
+
+        function save(form) {
+            if (form.style.display == "none") {
+                form.style.display = "block";
+            } 
+        }
+    </script>
+
+
+

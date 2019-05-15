@@ -1,0 +1,75 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+
+
+
+<style>
+    div.clip {
+        width: 200px;
+        height: 30px;
+        background: #66CDAA;
+        padding: 5px;
+        border-radius: 20px;
+        margin-bottom: 10px;
+        position: center;
+        text-align: center;
+        box-sizing: border-box;
+    }
+
+    button {
+        width: 200px;
+        background-color: Transparent;
+        background-repeat: no-repeat;
+        border: none;
+        cursor: pointer;
+        overflow: hidden;
+        outline: none;
+    }
+
+    .descr {
+        display: none;
+        margin-left: 200px;
+        padding: 10px;
+        margin-top: 50px;
+        background: #f3f3f3;
+        height: auto;
+        -moz-box-shadow: 0 5px 5px rgba(0,0,0,0.3);
+        -webkit-box-shadow: 0 5px 5px rgba(0,0,0,0.3);
+        box-shadow: 0 5px 5px rgba(0,0,0,0.3);
+    }
+
+    .clip:hover .descr {
+        display: block;
+        position: absolute;
+        top: 120px;
+        z-index: 9999;
+        width: 400px;
+    }
+</style>
+
+<center>
+    <h1>Make a choice</h1>
+    <p>Next HMAC: @ViewData["HmacNext"]</p>
+    <form method="post">
+        @{ var entities = ViewData["Entities"] as IList<ItraTask3.Models.Entity>;}
+        @for (int i = 0; i < entities.Count; i++)
+        {
+            <div class="clip">
+                <button type="submit" value="@entities[i].Name" name="UserChoice" asp-action="Index">@entities[i].Name</button>
+                <div class="descr">
+                    <p style="color:green">WIN: @entities[i].Win</p>
+                    <p style="color:red">LOSE:@entities[i].Lose </p>
+                </div>
+            </div>
+        }
+    </form>
+    @if (ViewData["Result"] != null)
+    {
+        <p>Result: @ViewData["Result"] </p>
+        <p>Computer choice: @ViewData["ComputerChoice"] </p>
+        <p>Key: @ViewData["Key"]</p>
+        <p>Now HMAC: @ViewData["HmacNow"]</p>
+    }
+</center>
